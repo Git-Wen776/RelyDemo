@@ -39,6 +39,7 @@ namespace RelyDemo
                 return;
             }
             _db = redis.GetDatabase();
+            logger.LogInformation("redis连接成功");
         }
 
         public ISubscriber Subscribe() {
