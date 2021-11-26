@@ -45,5 +45,7 @@ namespace RelyDemo
         public ISubscriber Subscribe() {
             return _redis.GetSubscriber();
         }
+
+        
     }
 }
