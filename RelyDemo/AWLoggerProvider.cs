@@ -11,17 +11,15 @@ namespace RelyDemo
     public class AWLoggerProvider : ILoggerProvider
     {
         private readonly AWConfigraution _config;
-        private readonly IFileOp op;
         private ConcurrentDictionary<string,AWLogger> awLoggers = new ConcurrentDictionary<string, AWLogger>();
 
-        public AWLoggerProvider(AWConfigraution config,IFileOp fileOp) {
+        public AWLoggerProvider(AWConfigraution config) {
             _config = config;
-            op = fileOp;
         }
 
         public ILogger CreateLogger(string categoryName)
         {
-            return awLoggers.GetOrAdd(categoryName, logger => new AWLogger(_config, categoryName,op));
+            return awLoggers.GetOrAdd(categoryName, logger => new AWLogger(_config, categoryName));
         }
 
         public void Dispose()

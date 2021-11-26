@@ -39,6 +39,7 @@ namespace RelyDemo
                 var rediswork = sp.GetService<IRedisUntiWrok>();
                 await rediswork.strSet("person", "马");
                 logger.LogInformation($"从redis获取的数据是{rediswork.strGet("person")}");
+                Console.ReadKey();
             }
         }
     }

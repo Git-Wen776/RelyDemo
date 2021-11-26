@@ -11,9 +11,10 @@ namespace RelyDemo
     public class AWLogger : ILogger
     {
         private readonly AWConfigraution _aw;
-        
-        public AWLogger(AWConfigraution aW,string na,IFileOp fileOp) {
+        private string name;
+        public AWLogger(AWConfigraution aW,string na) {
             _aw = aW;
+            name = na;
         }
         public IDisposable BeginScope<TState>(TState state) => default;
         public bool IsEnabled(LogLevel logLevel)
