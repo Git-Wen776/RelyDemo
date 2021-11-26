@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System;
 using Microsoft.Extensions.Logging.Console;
+using Newtonsoft.Json;
 
 namespace RelyDemo
 {
@@ -37,8 +38,24 @@ namespace RelyDemo
                 //var obb = sp.GetService<ObjOprion>();
                 //obb.Show();
                 var rediswork = sp.GetService<IRedisUntiWrok>();
-                await rediswork.strSet("person", "马");
-                logger.LogInformation($"从redis获取的数据是{rediswork.strGet("person")}");
+                //await rediswork.strSet("person", "马");
+                await Task.Delay(10);
+                //await rediswork.HashSet("stu", "xiaochen", new Student
+                //{
+                //    Classidd="1",
+                //    Id="2",
+                //    Name="xiao陈",
+                //    downurl=""
+                //});
+                var value =await rediswork.HashGet<Student>("stu", "xiaowan");
+                Console.WriteLine($"我在hash里面获取xiaowan--{value.Name}");
+                var p = rediswork.strGet("person");
+                var list = await rediswork.HashGetList<Student>("stu");
+                foreach(var item in list)
+                {
+                    Console.WriteLine(item.Name);
+                }
+                logger.LogInformation($"从redis获取的数据是{await p}");
                 Console.ReadKey();
             }
         }

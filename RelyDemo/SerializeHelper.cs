@@ -36,9 +36,5 @@ namespace RelyDemo
         {
             return JsonConvert.DeserializeObject<T>(value);
         }
-        public List<T> DesSerializeList<T>(string value)
-        {
-            return JsonConvert.DeserializeObject<List<T>>(value);
-        }
     }
 }

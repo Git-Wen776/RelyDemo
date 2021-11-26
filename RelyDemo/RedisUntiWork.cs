@@ -39,8 +39,8 @@ namespace RelyDemo
             return sub.PublishAsync(channels,message);
         }
 
-        public string strGet(string key) {
-            return db.StringGet(key);
+        public Task<RedisValue> strGet(string key) {
+            return db.StringGetAsync(key);
         }
 
         public Task strSet(string key,string value)
@@ -76,5 +76,34 @@ namespace RelyDemo
             var str=_serializeHelper.Serialize(t);
             return await db.HashSetAsync(key, filed, str);
         }
+
+        public async Task<T> HashGet<T>(string key,string filed)
+        {
+            if (! await db.HashExistsAsync(key, filed))
+                return default;
+            string value = await db.HashGetAsync(key, filed);
+            return _serializeHelper.DesSerialize<T>(value);
+        }
+
+        public async Task<List<T>> HashGetList<T>(string key)
+        {
+            if(! await db.KeyExistsAsync(key))
+                return new List<T> { default };
+            List<T> entitys = new();
+            foreach(var value in await db.HashValuesAsync(key))
+            {
+                entitys.Add(_serializeHelper.DesSerialize<T>(value));
+            }
+            return entitys;
+        }
+
+        //public async Task<bool> Lpush(string key,string filed,)
+        //{
+        //    if (await db.KeyExistsAsync(key))
+        //        return false;
+        //    return await db.ListLeftPushAsync();
+        //}
+        
+        
     }
 }

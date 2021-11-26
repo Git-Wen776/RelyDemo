@@ -9,7 +9,7 @@ namespace RelyDemo
 {
    public interface IRedisUntiWrok
     {
-        string strGet(string key);
+        Task<RedisValue> strGet(string key);
         Task strSet(string key, string value);
         /// <summary>
         /// 移除listid内部的值
@@ -30,5 +30,9 @@ namespace RelyDemo
         Task SubScribeAsync(string channels);
         Task PublishAsync(string channels, string message);
 
+        Task<bool> StringSetList<T>(string key, List<T> entitys);
+        Task<bool> HashSet<T>(string key,string filed,T t);
+        Task<T> HashGet<T>(string key, string filed);
+        Task<List<T>> HashGetList<T>(string key);
     }
 }
